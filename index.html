@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <link rel="shortcut icon" href="oil.png" type="image/x-icon">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.58.0/maps/maps.css'>
+        <link rel='stylesheet' type='text/css' href='./assets/ui-library/index.css'/>
+        <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/2.24.0//SearchBox.css'/>
+        <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.58.0/maps/css-styles/routing.css'/>
+        <title>Fuel Cost Assistant Pro</title>
+    </head>
+    <body>
+        <script src="main.js"></script>
+        <div class="mainsim">
+            <div><img class='img1'
+        src="https://cdn.discordapp.com/attachments/709455682470150169/710172400301506610/Imagem1.png" alt="carro">
+    </div>  
+            <!-- <p> Qual é a distância? (em KM) </p> <input type="text" id ="infdist" class="input" placeholder="Digite a distância"><br> -->
+            <div class="form-group">
+                <div class="form__group field">
+                    <input type="input" class="form__field" placeholder="Name" name="name" id="infdist" required="required"/>
+                    <label for="name" style: font-size: 0.9vw; class="form__label">Qual é a distância? (em quilometros)</label>
+                </div>
+
+                <!-- <p>Quantos quilometros seu veículo faz por litro de combustível?</p> <input type="text" id ="infkml" class="input" placeholder="em quilometros rodados/L"><br> -->
+
+                <div class="form__group field">
+                    <input type="input" class="form__field" placeholder="Name" name="name" id="infkml" required="required"/>
+                    <label for="name" style: font-size: 0.3 vw; class="form__label">Quantos quilometros seu veículo faz por litro de combustível? (km/l)</label>
+                </div>
+
+                <!-- <p>Qual é o preço do litro do combustível que você pretende usar viagem? </p> <input type="text" id ="precogas" class="input" placeholder="Preço em reais"> -->
+
+                <div class="form__group field">
+                    <input type="input" class="form__field" placeholder="Name" name="name" id="precogas" required="required"/>
+                    <label for="name" style: font-size: 40px; class="form__label">Qual é o preço do litro do combustível que você pretende usar viagem?</label>
+                </div>
+                <div class="button-container-2">
+                    <a>
+                        <span class="mas">Calcular</span>
+                        <button onclick="calcvalorsim();" id='btn2'>Go</button>
+                    </a>
+                </div>
+
+            </div>
+            <div>
+                <div class="table-responsive">
+                    <table class="table table-hover" border=2;>
+                        <thead class="thead-dark">
+                            <tr>
+
+                                <th>Combustível (L)</th>
+                                <th>Gasto (R$)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td id="comb"></td>
+                                <td id="rs"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="index.html">
+    <button class= "button-back">Back</button>
+    </a>
+            <div class='map-view'>
+            <form class='tt-side-panel js-form'>
+                <header class='tt-side-panel__header'>
+                    <div class="searchbox-wrapper">
+                        <div class='tt-icon icon-spacing -start'></div>
+                        <div id='startSearchBox' class='tt-form-label searchbox'></div>
+                    </div>
+                    <div class="searchbox-wrapper">
+                        <div class='tt-icon icon-spacing -finish'></div>
+                        <div id='finishSearchBox' class='tt-form-label searchbox'></div>
+                    </div>
+                </header>
+                <div class='tt-tabs js-tabs'>
+                    <div class='tt-tabs__panel'>
+                        <div class='tt-results-list js-results'></div>
+                        <div class='js-results-loader' hidden='hidden'>
+                            <div class='loader-center'><span class='loader'></span></div>
+                        </div>
+                        <div class='tt-tabs__placeholder js-results-placeholder -small'>
+                            Escolha o ponto de partida e de chegada :)
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div id='map' class='full-map'></div>
+            </div>
+        <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.58.0/maps/maps-web.min.js'></script>
+        <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.58.0/services/services-web.min.js'></script>
+        <script type='text/javascript' src='./assets/js/mobile-or-tablet.js'></script>
+        <script type='text/javascript' src='./assets/js/foldable.js'></script>
+        <script type='text/javascript' src='./assets/js/formatters.js'></script>
+        <script type='text/javascript' src='./assets/js/info-hint.js'></script>
+        <script type='text/javascript' src='./assets/js/search/dom-helpers.js'></script>
+        <script type='text/javascript' src='./assets/js/search/results-manager.js'></script>
+        <script type='text/javascript' src='./assets/js/search/searchbox-enter-submit.js'></script>
+        <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/2.24.0//SearchBox-web.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>   
+        <script src="./assets/js/map.js"></script>
+</body>
+</html>
